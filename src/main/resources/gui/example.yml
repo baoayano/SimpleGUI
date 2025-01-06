@@ -1,0 +1,34 @@
+# PlaceholderAPI hook :3
+title: "&6&lSimpleGUI"
+rows: 3
+file_name_command: true
+commands:
+  - gui
+items:
+  example_item:
+    name: "&6&lFree Diamond for %player_name%"
+    lore:
+      - "&7Click to get a free diamond."
+    material: DIAMOND
+    amount: 1
+    position_x: 5
+    position_y: 2
+    enchantments:
+      - "SHARPNESS:1"
+    flags:
+      - HIDE_ENCHANTS
+    commands:
+      - "console:give %player_name% diamond 1"
+      # - "player:give %player_name% diamond 1"
+      # - "open:example"
+      - "close"
+  close:
+    name: "&c&lClose"
+    lore:
+      - "&7Click to close the GUI."
+    material: BARRIER
+    amount: 1
+    position_x: 9
+    position_y: 3
+    commands:
+      - "close"

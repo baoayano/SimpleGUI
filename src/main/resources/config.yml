@@ -1,0 +1,11 @@
+# Thông báo chung
+prefix: "&7[&6SimpleGUI&7] "
+no_permission: "&cBạn không có quyền để thực hiện hành động này."
+no_permission_command: "&cBạn không có quyền để sử dụng lệnh này."
+usage: "&7Sử dụng: /simplegui [subcommand]"
+unknown_command: "&cLệnh không tồn tại!"
+reload_success: "&aĐã tải lại cấu hình thành công!"
+error: "&cĐã xảy ra lỗi, vui lòng thử lại sau."
+empty: "&cKhông có dữ liệu để hiển thị."
+list_gui: "&7Danh sách GUI: &e%_list_%"
+player_only: "&cLệnh này chỉ dành cho người chơi."

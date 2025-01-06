@@ -1,0 +1,25 @@
+name: SimpleGUI
+version: '1.0-SNAPSHOT'
+main: org.ako.simpleGUI.SimpleGUI
+api-version: '1.18'
+prefix: SimpleGUI
+authors: [ chirina ]
+description: A simple plugin that allows you to create custom GUI.
+depend: [ PlaceholderAPI ]
+permissions:
+  simplegui.reload:
+    description: Allow player to manage SimpleGUI.
+    default: false
+  simplegui.list:
+    description: Allow player to list all GUI.
+    default: false
+  simplegui.*:
+    description: Allow player to use all SimpleGUI features.
+    default: op
+    children:
+      simplegui.reload: true
+      simplegui.list: true
+commands:
+  simplegui:
+    description: Main command for SimpleGUI.
+    usage: /<command> [subcommand]
