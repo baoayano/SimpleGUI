@@ -3,6 +3,7 @@ package org.ako.simpleGUI.utils.command;
 import org.ako.simpleGUI.SimpleGUI;
 import org.ako.simpleGUI.utils.ChatFormat;
 import org.ako.simpleGUI.utils.GUICreator;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -38,7 +39,7 @@ public class CustomCommand {
                             if (!(commandSender instanceof Player p)) {
                                 commandSender.sendMessage(ChatFormat.convertOnlyColor((config.getString("prefix") + config.getString("player_only"))));
                                 return;
-                            } else if (!p.hasPermission("simplegui." + guiCommand) && !p.hasPermission("simplegui.*")) {
+                            } else if (!p.hasPermission("simplegui." + guiCommand) && !p.hasPermission("simplegui.*") && config.getBoolean("require_permission")) {
                                 commandSender.sendMessage(ChatFormat.convertOnlyColor((config.getString("prefix") + config.getString("no_permission"))));
                                 return;
                             }
@@ -66,16 +67,45 @@ public class CustomCommand {
 
                                 gui.addItem(
                                         slot,
-                                        ChatFormat.convert(p, Objects.requireNonNull(guiConfig.getString("items." + key + ".name"))),
+                                        guiConfig.getString("items." + key + ".name") != null ?
+                                                ChatFormat.convert(p, Objects.requireNonNull(guiConfig.getString("items." + key + ".name"))) : null,
                                         guiConfig.getString("items." + key + ".material"),
-                                        guiConfig.getInt("items." + key + ".amount"),
+                                        guiConfig.getInt("items." + key + ".amount") == 0 ? 1 : guiConfig.getInt("items." + key + ".amount"),
                                         enchantments,
                                         flags,
                                         lore
                                 );
-
-                                gui.openGUI();
                             }
+
+                            if (guiConfig.getBoolean("filter.enabled")) {
+                                String filter_name = guiConfig.getString("filter.name");
+
+                                String filter_material = Objects.requireNonNullElse(guiConfig.getString("filter.material"), "GRAY_STAINED_GLASS_PANE");
+                                int filter_amount = guiConfig.getInt("filter.amount") == 0 ? 1 : guiConfig.getInt("filter.amount");
+
+                                ArrayList<String> filter_enchantments = new ArrayList<>();
+
+                                guiConfig.getStringList("filter.enchantments").forEach(enchantment -> {
+                                    String[] enchantmentSplit = enchantment.split(":");
+                                    filter_enchantments.add(enchantmentSplit[0] + ":" + enchantmentSplit[1]);
+                                });
+
+                                ArrayList<String> filter_flags = new ArrayList<>(guiConfig.getStringList("filter.flags"));
+
+                                ArrayList<String> filter_lore = new ArrayList<>(guiConfig.getStringList("filter.lore").stream()
+                                        .map(s -> ChatFormat.convert(p, s)).toList());
+
+                                gui.addFilterItem(
+                                        filter_name != null ? ChatFormat.convert(p, filter_name) : null,
+                                        filter_material,
+                                        filter_amount,
+                                        filter_enchantments,
+                                        filter_flags,
+                                        filter_lore
+                                );
+                            }
+
+                            gui.openGUI();
                         });
                     });
                 }

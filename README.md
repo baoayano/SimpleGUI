@@ -1,5 +1,6 @@
 # SimpleGUI
 A simple Minecraft plugin that allows you to create GUIs easily.
+Current version: 1.0.1
 
 ## Features
 - Simple configuration.
@@ -26,8 +27,14 @@ _gui/example.yml_
 title: "&6&lSimpleGUI" # Title of GUI
 rows: 3 # 1 - 6 (MAX_ROWS)
 file_name_command: true # If true, the file name will be used as a command
+require_permission: true # If true, the player must have permission to open GUI
 commands: # Commands that can be used in GUI
   - gui
+filter: # Filter of GUI
+  enabled: true # If true, the filter will be displayed
+  material: GRAY_STAINED_GLASS_PANE # Material of filter
+  # The filter has the same properties as items (except position_x, position_y and commands)
+  # Such as name, lore, material, amount, enchantments, flags
 items: # Items in GUI
   example_item:
     # You can use PlaceholderAPI here

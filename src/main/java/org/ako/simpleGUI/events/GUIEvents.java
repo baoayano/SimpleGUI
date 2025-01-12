@@ -84,16 +84,46 @@ public class GUIEvents implements Listener {
                                                             .map(s -> ChatFormat.convert(newGui.getPlayer(), s))
                                                             .toList());
 
-                                                    int newSlot = (newGuiConfig.getInt("items." + key + ".position_x") - 1) + (9 * ((newGuiConfig.getInt("items." + key + ".position_y") - 1)));
+                                                    int newSlot = (newGuiConfig.getInt("items." + newKey + ".position_x") - 1) + (9 * ((newGuiConfig.getInt("items." + newKey + ".position_y") - 1)));
 
                                                     newGui.addItem(
                                                             newSlot,
-                                                            ChatFormat.convert(newGui.getPlayer(), Objects.requireNonNull(newGuiConfig.getString("items." + newKey + ".name"))),
+                                                            newGuiConfig.getString("items." + newKey + ".name") != null ?
+                                                                    ChatFormat.convert(newGui.getPlayer(), Objects.requireNonNull(newGuiConfig.getString("items." + newKey + ".name"))) : null,
                                                             newGuiConfig.getString("items." + newKey + ".material"),
-                                                            newGuiConfig.getInt("items." + newKey + ".amount"),
+                                                            newGuiConfig.getInt("items." + newKey + ".amount") == 0 ? 1 : newGuiConfig.getInt("items." + newKey + ".amount"),
                                                             enchantments,
                                                             (ArrayList<String>) newGuiConfig.getStringList("items." + newKey + ".flags"),
                                                             lore
+                                                    );
+                                                }
+
+                                                if (newGuiConfig.getBoolean("filter.enabled")) {
+                                                    String filter_name = newGuiConfig.getString("filter.name");
+
+                                                    String filter_material = Objects.requireNonNullElse(newGuiConfig.getString("filter.material"), "GRAY_STAINED_GLASS_PANE");
+                                                    int filter_amount = newGuiConfig.getInt("filter.amount") == 0 ? 1 : newGuiConfig.getInt("filter.amount");
+
+                                                    ArrayList<String> filter_enchantments = new ArrayList<>();
+
+                                                    newGuiConfig.getStringList("filter.enchantments").forEach(enchantment -> {
+                                                        String[] enchantmentSplit = enchantment.split(":");
+                                                        filter_enchantments.add(enchantmentSplit[0] + ":" + enchantmentSplit[1]);
+                                                    });
+
+                                                    ArrayList<String> filter_flags = new ArrayList<>(newGuiConfig.getStringList("filter.flags"));
+
+                                                    ArrayList<String> filter_lore = new ArrayList<>(newGuiConfig.getStringList("filter.lore").stream()
+                                                            .map(s -> ChatFormat.convert(newGui.getPlayer(), s))
+                                                            .toList());
+
+                                                    newGui.addFilterItem(
+                                                            filter_name != null ? ChatFormat.convert(newGui.getPlayer(), filter_name) : null,
+                                                            filter_material,
+                                                            filter_amount,
+                                                            filter_enchantments,
+                                                            filter_flags,
+                                                            filter_lore
                                                     );
                                                 }
 

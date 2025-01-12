@@ -73,6 +73,21 @@ public class GUICreator implements InventoryHolder {
 
     }
 
+    public void addFilterItem(
+            String displayName,
+            String material,
+            int amount,
+            ArrayList<String> enchantment,
+            ArrayList<String> itemFlags,
+            ArrayList<String> lore
+    ) {
+        for (int i = 0; i < size; i++) {
+            if (!items.containsKey(i)) {
+                addItem(i, displayName, material, amount, enchantment, itemFlags, lore);
+            }
+        }
+    }
+
     public void openGUI() {
         Inventory inv = Bukkit.createInventory(this, size, title);
 

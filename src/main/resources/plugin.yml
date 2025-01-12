@@ -1,5 +1,5 @@
 name: SimpleGUI
-version: '1.0-SNAPSHOT'
+version: '1.0.1'
 main: org.ako.simpleGUI.SimpleGUI
 api-version: '1.18'
 prefix: SimpleGUI

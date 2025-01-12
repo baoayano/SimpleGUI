@@ -2,8 +2,12 @@
 title: "&6&lSimpleGUI"
 rows: 3
 file_name_command: true
+require_permission: true
 commands:
   - gui
+filter:
+  enabled: true
+  material: GRAY_STAINED_GLASS_PANE
 items:
   example_item:
     name: "&6&lFree Diamond for %player_name%"
