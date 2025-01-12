@@ -1,6 +1,7 @@
 # SimpleGUI
 A simple Minecraft plugin that allows you to create GUIs easily.
-Current version: 1.0.1
+
+**Current version:** 1.0.1
 
 ![image](https://github.com/user-attachments/assets/6e91fcaf-6797-42e1-b79a-46aa261f1ff1)
 
